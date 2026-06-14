@@ -1,0 +1,30 @@
+CREATE TABLE roles (
+    id UUID PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE users (
+    id UUID PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role_id UUID NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_user_role
+        FOREIGN KEY (role_id)
+        REFERENCES roles(id)
+);
+
+CREATE INDEX idx_users_email
+ON users(email);
+
+INSERT INTO roles(id, name)
+VALUES
+(
+    '11111111-1111-1111-1111-111111111111',
+    'ADMIN'
+),
+(
+    '22222222-2222-2222-2222-222222222222',
+    'STUDENT'
+);
